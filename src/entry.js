@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -55,3 +55,8 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
+ipcMain.on('request-keyboard-shortcut', (event, shortcut) => {
+  globalShortcut.register(shortcut, () => {
+    event.sender.send(`keyboard-shortcut-${shortcut}`);
+  })
+})

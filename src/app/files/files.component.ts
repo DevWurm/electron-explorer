@@ -1,4 +1,4 @@
-import { shell } from 'electron';
+import { shell, ipcRenderer } from 'electron';
 import { readdir, stat } from 'fs';
 import { resolve } from 'path';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +16,13 @@ export class FilesComponent implements OnInit {
     this.updateEntries();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    ipcRenderer.send('request-keyboard-shortcut', 'Backspace');
+
+    ipcRenderer.on('keyboard-shortcut-Backspace', () => {
+        this.changeDir('..');
+    });
+  }
 
   private updateEntries() {
     readdir(this.currentPath, (err: Error, files: [string]) => {
