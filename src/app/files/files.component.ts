@@ -1,3 +1,4 @@
+import { shell } from 'electron';
 import { readdir, stat } from 'fs';
 import { resolve } from 'path';
 import { Component, OnInit } from '@angular/core';
@@ -46,7 +47,6 @@ export class FilesComponent implements OnInit {
   }
 
   private openFile(path: string) {
-    // TODO: Implement file opening
-    return
+    shell.openItem(path);
   }
 }
